@@ -9,12 +9,10 @@ class ChatRepository
 
     public function store($request)
     {
-        $data = $request->all();
-
         $chat = new Chat;
 
-        $chat->pseudo = $data['pseudo'];
-        $chat->message = $data['message'];
+        $chat->message = $request->message;
+        $chat->user_id = $request->user()->id;
 
         $chat->save();
     }

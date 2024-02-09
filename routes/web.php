@@ -15,10 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('auth/login');
+});
 
-Route::get('/', [ChatController::class, 'index']);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::resource('/chat', ChatController::class);
+
+Route::middleware('XSS')->group(function () {
+   Route::resource('/chat', ChatController::class);
+});
+
+require __DIR__.'/auth.php';
