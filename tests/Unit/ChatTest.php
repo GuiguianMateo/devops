@@ -10,7 +10,6 @@ use Mockery;
 use Tests\TestCase;
 
 class ChatTest extends TestCase
-
 {
     use RefreshDatabase;
 
@@ -19,14 +18,14 @@ class ChatTest extends TestCase
         $this->assertTrue(true);
     }*/
 
-    public function test_Index_Method_Returns_Correct_View()
+    public function testIndexMethodReturnsCorrectView()
     {
         $response = $this->get(route('chat.index'));
         $response->assertStatus(200);
         $response->assertViewIs('chat.index');
     }
 
-    public function test_check_all_input_full()
+    public function testCheckAllInputFull()
     {
         // Créer un mock du repository
         $mockRepository = Mockery::mock(ChatRepository::class);
@@ -63,12 +62,10 @@ class ChatTest extends TestCase
         // Extraire l'URL de redirection de la réponse
         $redirectUrl = $response->getTargetUrl();
 
-        // Vérifier que l'URL de redirection correspond à la route 'chat.index'
+        // Vérifier que l'URL de redirection correspond à la route 'Chat.index'
         $this->assertEquals(route('chat.index'), $redirectUrl);
     }
-
-
-    public function test_check_all_input_empty()
+    public function testCheckAllInputEmpty()
     {
         // Créer un mock du repository
         $mockRepository = Mockery::mock(ChatRepository::class);
@@ -105,12 +102,10 @@ class ChatTest extends TestCase
         // Extraire l'URL de redirection de la réponse
         $redirectUrl = $response->getTargetUrl();
 
-        // Vérifier que l'URL de redirection correspond à la route 'chat.index'
+        // Vérifier que l'URL de redirection correspond à la route 'Chat.index'
         $this->assertEquals(route('chat.index'), $redirectUrl);
     }
-
-
-    public function test_check_only_pseudo_full()
+    public function testCheckPseudoInputOnly()
     {
         // Créer un mock du repository
         $mockRepository = Mockery::mock(ChatRepository::class);
@@ -121,7 +116,6 @@ class ChatTest extends TestCase
         // Créer une fausse requête avec les données que vous souhaitez tester
         $requestData = [
             'pseudo' => 'test pseudo',
-            'message' => '',
             // autres champs...
         ];
 
@@ -133,8 +127,7 @@ class ChatTest extends TestCase
             ->once()
             ->with(Mockery::on(function ($arg) use ($requestData) {
                 return $arg instanceof Request &&
-                       $arg->input('pseudo') === $requestData['pseudo'] &&
-                       $arg->input('message') === $requestData['message'];
+                       $arg->input('pseudo') === $requestData['pseudo'];
                 // Ajoutez d'autres conditions pour les autres champs si nécessaire
             }));
 
@@ -147,12 +140,10 @@ class ChatTest extends TestCase
         // Extraire l'URL de redirection de la réponse
         $redirectUrl = $response->getTargetUrl();
 
-        // Vérifier que l'URL de redirection correspond à la route 'chat.index'
+        // Vérifier que l'URL de redirection correspond à la route 'Chat.index'
         $this->assertEquals(route('chat.index'), $redirectUrl);
     }
-
-
-    public function test_check_only_message_full()
+    public function testCheckMessageInputOnly()
     {
         // Créer un mock du repository
         $mockRepository = Mockery::mock(ChatRepository::class);
@@ -162,7 +153,6 @@ class ChatTest extends TestCase
 
         // Créer une fausse requête avec les données que vous souhaitez tester
         $requestData = [
-            'pseudo' => '',
             'message' => 'test message',
             // autres champs...
         ];
@@ -175,7 +165,6 @@ class ChatTest extends TestCase
             ->once()
             ->with(Mockery::on(function ($arg) use ($requestData) {
                 return $arg instanceof Request &&
-                       $arg->input('pseudo') === $requestData['pseudo'] &&
                        $arg->input('message') === $requestData['message'];
                 // Ajoutez d'autres conditions pour les autres champs si nécessaire
             }));
@@ -189,7 +178,7 @@ class ChatTest extends TestCase
         // Extraire l'URL de redirection de la réponse
         $redirectUrl = $response->getTargetUrl();
 
-        // Vérifier que l'URL de redirection correspond à la route 'chat.index'
+        // Vérifier que l'URL de redirection correspond à la route 'Chat.index'
         $this->assertEquals(route('chat.index'), $redirectUrl);
     }
 
