@@ -28,4 +28,8 @@ Route::middleware('XSS')->group(function () {
    Route::resource('/chat', ChatController::class);
 });
 
+Route::middleware('auth')->group(function () {
+    Route::resource('/chat', ChatController::class);
+ });
+
 require __DIR__.'/auth.php';
